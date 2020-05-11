@@ -16,7 +16,7 @@ all: ${BINARIES}
 
 lab05Test: lab05Test.o WordCount.o tddFuncs.o
 	${CXX} $^ -g -o $@
-	#./lab05Test
+	./lab05Test
 
 clean:
 	/bin/rm -f ${BINARIES} *.o

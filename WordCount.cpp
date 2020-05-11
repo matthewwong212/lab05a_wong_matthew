@@ -203,18 +203,18 @@ void WordCount::dumpWordsSortedByOccurence(std::ostream &out) const {
 							sort.insert(sort.begin(), temp);
 							break;
 						}
-					} else if ( (temp.second == sort.at(0).second) && (temp.first < sort.at(0).first) ) {
+					} else if ( (temp.second == sort.at(0).second) && (temp.first < sort.at(0).first) ) {	//same occurences as smallest, compare strings
 						sort.insert(sort.begin(), temp);
 						break;
 					}
 				} else {	//At least 2 elements in vector, starts at k = 1
-					if ( (temp.second > sort.at(k-1).second) && (temp.second < sort.at(k).second) ) {
+					if ( (temp.second > sort.at(k-1).second) && (temp.second < sort.at(k).second) ) {	//compare occurences
 						sort.insert(sort.begin()+k, temp);
 						break;
-					} else if ( (temp.first > sort.at(k-1).first) && (temp.first < sort.at(k).first) ) {
+					} else if ( (temp.first > sort.at(k-1).first) && (temp.first < sort.at(k).first) ) {	//compare strings
 						sort.insert(sort.begin()+k, temp);
 						break;
-					} else if (k == sortedSize - 1) {
+					} else if (k == sortedSize - 1) {							//last item
 						sort.push_back(temp);
 						break;
 					}
