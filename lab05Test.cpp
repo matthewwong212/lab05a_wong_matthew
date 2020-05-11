@@ -44,5 +44,14 @@ int main() {
 	ASSERT_EQUALS("thang,2\nisn't,1\nain't,1\na,2\n", aTest0.str());
 	ASSERT_EQUALS("ain't,1\nisn't,1\na,2\nthang,2\n", aTest1.str());
 
+	//Test with consecutive numbers
+	ostringstream cTest0, cTest1;
+	WordCount conTest;
+	conTest.addAllWords("one two two three three three four four four four thre thre thre five five five five five");
+	conTest.dumpWordsSortedByWord(cTest0);
+	conTest.dumpWordsSortedByOccurence(cTest1);
+	ASSERT_EQUALS("two,2\nthree,3\nthre,3\none,1\nfour,4\nfive,5\n", cTest0.str());
+	ASSERT_EQUALS("one,1\ntwo,2\nthre,3\nthree,3\nfour,4\nfive,5\n", cTest1.str());
+
 	return 0;
 }
