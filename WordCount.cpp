@@ -3,6 +3,7 @@
 #include "WordCount.h"
 #include <iostream>
 #include <sstream>
+#include <string.h>
 
 using namespace std;
 
@@ -144,25 +145,26 @@ void WordCount::dumpWordsSortedByWord(std::ostream &out) const {
 				if (k == 0) {
 					if (sortedSize == 0) {			//empty vector
 						sort.push_back(temp);
+						//cout << "inserted " << temp.first << " as first value" << endl;
 						break;
-					} else if (sortedSize == 1) {	//one element in vector
-						if (temp.first < sort.at(0).first) {
-							sort.push_back(temp);
-							break;
-						} else {
-							sort.insert(sort.begin(), temp);
-							break;
-						}
+					} else if (temp.first > sort.at(0).first) {
+						sort.insert(sort.begin(), temp);
+						//cout << "inserted " << temp.first << " as largest value" << endl;
+						break;
+					} else if ( (temp.first < sort.at(0).first) && (sortedSize == 1) ) {
+						sort.push_back(temp);
+						//cout << "inserted " << temp.first << " as smallest value with only 1 previously in vector" << endl;
+						break;
 					}
 				} else {							//At least 2 elements in vector, starts at k=1
 					if ( (temp.first < sort.at(k-1).first) && (temp.first > sort.at(k).first) ) {	//Insert between element k-1 and k
 						sort.insert(sort.begin()+k, temp);
+						//cout << "inserted " << temp.first << " between: " << sort.at(k-1).first << " and " << sort.at(k).first << endl;
 						break;
 					} else if (k == sortedSize - 1) {	//Last (smallest) element in list, append at back
 						sort.push_back(temp);
+						//cout << "inserted " << temp.first << " as smallest value" << endl;
 						break;
-					} else {
-						cout << "ERROR: Didn't meet any conditions.  Should not reach this." << endl;
 					}
 				}
 				k++;
@@ -181,5 +183,25 @@ void WordCount::dumpWordsSortedByOccurence(std::ostream &out) const {
 }
 
 void WordCount::addAllWords(std::string text) {
-	//STUB
+	char c[text.size() + 1];
+	strcpy(c, text.c_str());
+
+	string temp = "";
+	for (int i = 0; i < (int)text.size()+1; i++) {
+		if ( c[i] == ' ' || c[i] == ',' || c[i] == '\n' || c[i] == '\t') {
+			incrWordCount(temp);
+			temp = "";
+		} else {
+			temp = temp + c[i];
+		}
+	}
+	// for (auto i : text) {
+	// 	if (i == ' ' || i == ',' || i == '\n' || i == '\t') {
+	// 		incrWordCount(temp);
+	// 		temp = "";
+	// 	} else {
+	// 		temp = temp + i;
+	// 	}
+	// }
+	incrWordCount(temp);
 }

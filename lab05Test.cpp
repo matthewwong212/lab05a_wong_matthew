@@ -69,10 +69,12 @@ int main() {
 	//Test ostream
 	ostringstream test;
 	WordCount nTest;
-	nTest.incrWordCount("sentence");
-	nTest.incrWordCount("is");
-	nTest.incrWordCount("a");
-	nTest.incrWordCount("sentence");
+	//nTest.addAllWords("Sentence \nis a sentence");
+	nTest.addAllWords("this-a and then this-b z  aaaaaa z z aaaaaa");
+	// nTest.incrWordCount("this-a");
+	// nTest.incrWordCount("and");
+	// nTest.incrWordCount("z");
+	// nTest.incrWordCount("this-b");
 	nTest.dumpWordsSortedByWord(test);
 	cout << test.str();
 
