@@ -4,6 +4,7 @@
 #include <iostream>
 #include <sstream>
 #include <string.h>
+#include <algorithm>
 
 using namespace std;
 
@@ -132,38 +133,21 @@ std::string WordCount::makeValidWord(std::string word) {
 void WordCount::dumpWordsSortedByWord(std::ostream &out) const {
 	vector<pair<string, int>> sort;
 	pair<string, int> temp;
-	size_t sortedSize;
 
-	//Insert in sorted order into new vector
+	//Fill new vector
 	for (size_t i = 0; i < CAPACITY; i++) {		//iterate through array
 		for(size_t j = 0; j < table[i].size(); j++) {	//iterate through vector
 			temp = table[i].at(j);
+			sort.push_back(temp);
+		}
+	}
 
-			sortedSize = sort.size();
-			size_t k = 0;
-			do {
-				if (k == 0) {
-					if (sortedSize == 0) {			//empty vector
-						sort.push_back(temp);
-						break;
-					} else if (temp.first > sort.at(0).first) {	//insert at front
-						sort.insert(sort.begin(), temp);
-						break;
-					} else if ( (temp.first < sort.at(0).first) && (sortedSize == 1) ) {	//insert at back when only one item in vector
-						sort.push_back(temp);
-						break;
-					}
-				} else {							//At least 2 elements in vector, starts at k=1
-					if ( (temp.first < sort.at(k-1).first) && (temp.first > sort.at(k).first) ) {	//Insert between element k-1 and k
-						sort.insert(sort.begin()+k, temp);
-						break;
-					} else if (k == sortedSize - 1) {	//Last (smallest) element in list, append at back
-						sort.push_back(temp);
-						break;
-					}
-				}
-				k++;
-			} while (k < sortedSize);
+	//Sort vector
+	for (size_t i = 0; i < sort.size()-1; i++) {
+		for (size_t j = 0; j < sort.size()-i-1; j++) {
+			if (sort.at(j).first < sort.at(j+1).first) {
+				swap(sort[j], sort[j+1]);
+			}
 		}
 	}
 
@@ -176,55 +160,27 @@ void WordCount::dumpWordsSortedByWord(std::ostream &out) const {
 void WordCount::dumpWordsSortedByOccurence(std::ostream &out) const {
 	vector<pair<string, int>> sort;
 	pair<string, int> temp;
-	size_t sortedSize;
 
+	//Write all values to new vector
 	for (size_t i = 0; i < CAPACITY; i++) {
 		for (size_t j = 0; j < table[i].size(); j++) {
 			temp = table[i].at(j);
-			sortedSize = sort.size();
-			size_t k = 0;
-
-			do {
-				if (k == 0) {
-					if (sortedSize == 0) {	//empty vector
-						sort.push_back(temp);
-						break;
-					} else if (temp.second < sort.at(0).second) {	//insert at front
-						sort.insert(sort.begin(), temp);
-						break;
-					} else if (sortedSize == 1) {					//one item in vector
-						if (temp.second > sort.at(0).second) {		//new item has more occurences
-							sort.push_back(temp);
-							break;
-						} else if (temp.first > sort.at(0).first) {	//occurences match, compare strings
-							sort.push_back(temp);
-							break;
-						} else {
-							sort.insert(sort.begin(), temp);
-							break;
-						}
-					} else if ( (temp.second == sort.at(0).second) && (temp.first < sort.at(0).first) ) {	//same occurences as smallest, compare strings
-						sort.insert(sort.begin(), temp);
-						break;
-					}
-				} else {	//At least 2 elements in vector, starts at k = 1
-					if ( (temp.second > sort.at(k-1).second) && (temp.second < sort.at(k).second) ) {	//compare occurences
-						sort.insert(sort.begin()+k, temp);
-						break;
-					} else if ( (temp.first > sort.at(k-1).first) && (temp.first < sort.at(k).first) ) {	//compare strings
-						sort.insert(sort.begin()+k, temp);
-						break;
-					} else if (k == sortedSize - 1) {							//last item
-						sort.push_back(temp);
-						break;
-					}
-				}
-				k++;
-			} while (k < sortedSize);
+			sort.push_back(temp);
 		}
 	}
 
-	//Write vector to out
+	//Sort vector
+	for (size_t i = 0; i < sort.size()-1; i++) {
+		for (size_t j = 0; j < sort.size()-i-1; j++) {
+			if (sort.at(j).second > sort.at(j+1).second) {		//Compare by occurence, swap is needed
+				swap(sort[j], sort[j+1]);
+			} else if ( (sort.at(j).second == sort.at(j+1).second) && (sort.at(j).first > sort.at(j+1).first) ){		//Compare by string, swap if needed
+				swap(sort[j], sort[j+1]);	
+			}
+		}
+	}
+
+	//Write sorted vector to out
 	for (size_t i = 0; i < sort.size(); i++) {
 		out << sort.at(i).first << "," << sort.at(i).second << "\n";
 	}
