@@ -9,66 +9,71 @@ using namespace std;
 
 int main() {
 	//Test incremenent and decrement of valid words
-	WordCount testValidWords, testEmpty;
+	// WordCount testValidWords, testEmpty;
 
-	testValidWords.incrWordCount("one");
-	testValidWords.incrWordCount("two");
-	testValidWords.incrWordCount("two");
-	testValidWords.incrWordCount("three");
-	testValidWords.incrWordCount("three");
-	testValidWords.incrWordCount("three");
+	// testValidWords.incrWordCount("one");
+	// testValidWords.incrWordCount("two");
+	// testValidWords.incrWordCount("two");
+	// testValidWords.incrWordCount("three");
+	// testValidWords.incrWordCount("three");
+	// testValidWords.incrWordCount("three");
 
-	ASSERT_EQUALS(0, testEmpty. getWordCount("one"));
-	ASSERT_EQUALS(1, testValidWords.getWordCount("one"));
-	ASSERT_EQUALS(2, testValidWords.getWordCount("two"));
-	ASSERT_EQUALS(3, testValidWords.getWordCount("three"));
+	// ASSERT_EQUALS(0, testEmpty. getWordCount("one"));
+	// ASSERT_EQUALS(1, testValidWords.getWordCount("one"));
+	// ASSERT_EQUALS(2, testValidWords.getWordCount("two"));
+	// ASSERT_EQUALS(3, testValidWords.getWordCount("three"));
 
-	ASSERT_EQUALS(3, testValidWords.getNumUniqueWords());
-	ASSERT_EQUALS(6, testValidWords.getTotalWords());
-
-
-	testValidWords.decrWordCount("one");
-	testValidWords.decrWordCount("two");
-	testValidWords.decrWordCount("three");
-
-	ASSERT_EQUALS(0, testValidWords.getWordCount("one"));
-	ASSERT_EQUALS(1, testValidWords.getWordCount("two"));
-	ASSERT_EQUALS(2, testValidWords.getWordCount("three"));
-
-	ASSERT_EQUALS(2, testValidWords.getNumUniqueWords());
-	ASSERT_EQUALS(3, testValidWords.getTotalWords());
+	// ASSERT_EQUALS(3, testValidWords.getNumUniqueWords());
+	// ASSERT_EQUALS(6, testValidWords.getTotalWords());
 
 
+	// testValidWords.decrWordCount("one");
+	// testValidWords.decrWordCount("two");
+	// testValidWords.decrWordCount("three");
 
-	//Test use of invalid words
-	WordCount testInvalidWords;
+	// ASSERT_EQUALS(0, testValidWords.getWordCount("one"));
+	// ASSERT_EQUALS(1, testValidWords.getWordCount("two"));
+	// ASSERT_EQUALS(2, testValidWords.getWordCount("three"));
 
-	testInvalidWords.incrWordCount("!!!!!!!");
-	testInvalidWords.incrWordCount("inV&*#a**lid");
-	testInvalidWords.incrWordCount("Invali!!!!!d");
-	testInvalidWords.incrWordCount("INVA    LID!!!!");
-	testInvalidWords.incrWordCount("thisisa88242word");
+	// ASSERT_EQUALS(2, testValidWords.getNumUniqueWords());
+	// ASSERT_EQUALS(3, testValidWords.getTotalWords());
 
-	ASSERT_EQUALS(0, testInvalidWords.getWordCount("!!!!!!!"));
-	ASSERT_EQUALS(3, testInvalidWords.getWordCount("invalid"));
 
-	testInvalidWords.decrWordCount("!!!!!!!");
-	testInvalidWords.decrWordCount("inva1562354lid");
 
-	ASSERT_EQUALS(0, testInvalidWords.getWordCount("!!!!!!!"));
-	ASSERT_EQUALS(2, testInvalidWords.getWordCount("invalid"));
+	// //Test use of invalid words
+	// WordCount testInvalidWords;
 
-	//Test number of unique words
-	ASSERT_EQUALS(2, testInvalidWords.getNumUniqueWords());
-	ASSERT_EQUALS(0, testEmpty.getNumUniqueWords());
+	// testInvalidWords.incrWordCount("!!!!!!!");
+	// testInvalidWords.incrWordCount("inV&*#a**lid");
+	// testInvalidWords.incrWordCount("Invali!!!!!d");
+	// testInvalidWords.incrWordCount("INVA    LID!!!!");
+	// testInvalidWords.incrWordCount("thisisa88242word");
 
-	//Test total words
-	ASSERT_EQUALS(3, testInvalidWords.getTotalWords());
-	ASSERT_EQUALS(0, testEmpty.getTotalWords());
+	// ASSERT_EQUALS(0, testInvalidWords.getWordCount("!!!!!!!"));
+	// ASSERT_EQUALS(3, testInvalidWords.getWordCount("invalid"));
+
+	// testInvalidWords.decrWordCount("!!!!!!!");
+	// testInvalidWords.decrWordCount("inva1562354lid");
+
+	// ASSERT_EQUALS(0, testInvalidWords.getWordCount("!!!!!!!"));
+	// ASSERT_EQUALS(2, testInvalidWords.getWordCount("invalid"));
+
+	// //Test number of unique words
+	// ASSERT_EQUALS(2, testInvalidWords.getNumUniqueWords());
+	// ASSERT_EQUALS(0, testEmpty.getNumUniqueWords());
+
+	// //Test total words
+	// ASSERT_EQUALS(3, testInvalidWords.getTotalWords());
+	// ASSERT_EQUALS(0, testEmpty.getTotalWords());
 
 	//Test ostream
 	ostringstream test;
-	testValidWords.dumpWordsSortedByWord(test);
+	WordCount nTest;
+	nTest.incrWordCount("sentence");
+	nTest.incrWordCount("is");
+	nTest.incrWordCount("a");
+	nTest.incrWordCount("sentence");
+	nTest.dumpWordsSortedByWord(test);
 	cout << test.str();
 
 	return 0;
