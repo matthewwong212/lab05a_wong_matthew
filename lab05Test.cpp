@@ -70,12 +70,13 @@ int main() {
 	ostringstream test;
 	WordCount nTest;
 	//nTest.addAllWords("Sentence \nis a sentence");
-	nTest.addAllWords("this-a and then this-b z  aaaaaa z z aaaaaa");
+	nTest.addAllWords("sentence is a fun fun sentence");
 	// nTest.incrWordCount("this-a");
 	// nTest.incrWordCount("and");
 	// nTest.incrWordCount("z");
 	// nTest.incrWordCount("this-b");
-	nTest.dumpWordsSortedByWord(test);
+	//nTest.dumpWordsSortedByWord(test);
+	nTest.dumpWordsSortedByOccurence(test);
 	cout << test.str();
 
 	return 0;

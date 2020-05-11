@@ -145,25 +145,20 @@ void WordCount::dumpWordsSortedByWord(std::ostream &out) const {
 				if (k == 0) {
 					if (sortedSize == 0) {			//empty vector
 						sort.push_back(temp);
-						//cout << "inserted " << temp.first << " as first value" << endl;
 						break;
-					} else if (temp.first > sort.at(0).first) {
+					} else if (temp.first > sort.at(0).first) {	//insert at front
 						sort.insert(sort.begin(), temp);
-						//cout << "inserted " << temp.first << " as largest value" << endl;
 						break;
-					} else if ( (temp.first < sort.at(0).first) && (sortedSize == 1) ) {
+					} else if ( (temp.first < sort.at(0).first) && (sortedSize == 1) ) {	//insert at back when only one item in vector
 						sort.push_back(temp);
-						//cout << "inserted " << temp.first << " as smallest value with only 1 previously in vector" << endl;
 						break;
 					}
 				} else {							//At least 2 elements in vector, starts at k=1
 					if ( (temp.first < sort.at(k-1).first) && (temp.first > sort.at(k).first) ) {	//Insert between element k-1 and k
 						sort.insert(sort.begin()+k, temp);
-						//cout << "inserted " << temp.first << " between: " << sort.at(k-1).first << " and " << sort.at(k).first << endl;
 						break;
 					} else if (k == sortedSize - 1) {	//Last (smallest) element in list, append at back
 						sort.push_back(temp);
-						//cout << "inserted " << temp.first << " as smallest value" << endl;
 						break;
 					}
 				}
@@ -179,7 +174,60 @@ void WordCount::dumpWordsSortedByWord(std::ostream &out) const {
 }
 
 void WordCount::dumpWordsSortedByOccurence(std::ostream &out) const {
-	// STUB
+	vector<pair<string, int>> sort;
+	pair<string, int> temp;
+	size_t sortedSize;
+
+	for (size_t i = 0; i < CAPACITY; i++) {
+		for (size_t j = 0; j < table[i].size(); j++) {
+			temp = table[i].at(j);
+			sortedSize = sort.size();
+			size_t k = 0;
+
+			do {
+				if (k == 0) {
+					if (sortedSize == 0) {	//empty vector
+						sort.push_back(temp);
+						break;
+					} else if (temp.second < sort.at(0).second) {	//insert at front
+						sort.insert(sort.begin(), temp);
+						break;
+					} else if (sortedSize == 1) {					//one item in vector
+						if (temp.second > sort.at(0).second) {		//new item has more occurences
+							sort.push_back(temp);
+							break;
+						} else if (temp.first > sort.at(0).first) {	//occurences match, compare strings
+							sort.push_back(temp);
+							break;
+						} else {
+							sort.insert(sort.begin(), temp);
+							break;
+						}
+					} else if ( (temp.second == sort.at(0).second) && (temp.first < sort.at(0).first) ) {
+						sort.insert(sort.begin(), temp);
+						break;
+					}
+				} else {	//At least 2 elements in vector, starts at k = 1
+					if ( (temp.second > sort.at(k-1).second) && (temp.second < sort.at(k).second) ) {
+						sort.insert(sort.begin()+k, temp);
+						break;
+					} else if ( (temp.first > sort.at(k-1).first) && (temp.first < sort.at(k).first) ) {
+						sort.insert(sort.begin()+k, temp);
+						break;
+					} else if (k == sortedSize - 1) {
+						sort.push_back(temp);
+						break;
+					}
+				}
+				k++;
+			} while (k < sortedSize);
+		}
+	}
+
+	//Write vector to out
+	for (size_t i = 0; i < sort.size(); i++) {
+		out << sort.at(i).first << "," << sort.at(i).second << "\n";
+	}
 }
 
 void WordCount::addAllWords(std::string text) {
@@ -187,21 +235,13 @@ void WordCount::addAllWords(std::string text) {
 	strcpy(c, text.c_str());
 
 	string temp = "";
-	for (int i = 0; i < (int)text.size()+1; i++) {
-		if ( c[i] == ' ' || c[i] == ',' || c[i] == '\n' || c[i] == '\t') {
+	for (auto i : text) {
+		if (i == ' ' || i == ',' || i == '\n' || i == '\t') {
 			incrWordCount(temp);
 			temp = "";
 		} else {
-			temp = temp + c[i];
+			temp = temp + i;
 		}
 	}
-	// for (auto i : text) {
-	// 	if (i == ' ' || i == ',' || i == '\n' || i == '\t') {
-	// 		incrWordCount(temp);
-	// 		temp = "";
-	// 	} else {
-	// 		temp = temp + i;
-	// 	}
-	// }
 	incrWordCount(temp);
 }
