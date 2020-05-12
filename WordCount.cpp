@@ -175,7 +175,7 @@ void WordCount::dumpWordsSortedByOccurence(std::ostream &out) const {
 			if (sort.at(j).second > sort.at(j+1).second) {		//Compare by occurence, swap is needed
 				swap(sort[j], sort[j+1]);
 			} else if ( (sort.at(j).second == sort.at(j+1).second) && (sort.at(j).first > sort.at(j+1).first) ){		//Compare by string, swap if needed
-				swap(sort[j], sort[j+1]);	
+				swap(sort[j], sort[j+1]);
 			}
 		}
 	}
