@@ -53,5 +53,14 @@ int main() {
 	ASSERT_EQUALS("two,2\nthree,3\nthre,3\none,1\nfour,4\nfive,5\n", cTest0.str());
 	ASSERT_EQUALS("one,1\ntwo,2\nthre,3\nthree,3\nfour,4\nfive,5\n", cTest1.str());
 
+	//Test with all same number of occurences
+	ostringstream sTest0, sTest1;
+	WordCount samTest;
+	samTest.addAllWords("there is only one occurrence of each word, so it should be sorted in alphabetical order.");
+	samTest.dumpWordsSortedByWord(sTest0);
+	samTest.dumpWordsSortedByOccurence(sTest1);
+	ASSERT_EQUALS("word,1\nthere,1\nsorted,1\nso,1\nshould,1\norder,1\nonly,1\none,1\nof,1\noccurrence,1\nit,1\nis,1\nin,1\neach,1\nbe,1\nalphabetical,1\n", sTest0.str());
+	ASSERT_EQUALS("alphabetical,1\nbe,1\neach,1\nin,1\nis,1\nit,1\noccurrence,1\nof,1\none,1\nonly,1\norder,1\nshould,1\nso,1\nsorted,1\nthere,1\nword,1\n", sTest1.str());
+
 	return 0;
 }

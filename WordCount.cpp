@@ -168,7 +168,7 @@ void WordCount::dumpWordsSortedByOccurence(std::ostream &out) const {
 			sort.push_back(temp);
 		}
 	}
-
+	
 	//Sort vector
 	for (size_t i = 0; i < sort.size()-1; i++) {
 		for (size_t j = 0; j < sort.size()-i-1; j++) {
